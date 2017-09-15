@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env nodejs
 
 var express = require('express')
 var bodyParser = require('body-parser');
@@ -35,8 +35,6 @@ var request = require('request');
 
 // TCP port that this webhook application listens on
 var WEBHOOK_PORT = 9999;
-// Instance ID of your dedicated Enterprise Gateway
-var GATEWAY_INSTANCE_ID = 99;
 // Put down your own client ID and secret here:
 var CLIENT_ID = "YOUR_OWN_CLIENT_ID";
 var CLIENT_SECRET = "YOUR_OWN_SECRET_ID";
@@ -52,8 +50,9 @@ app.use(bodyParser.json()); // for parsing application/json
  * User needs to write this function to define
  * how they would like to handle incoming messages.
  */
-function handleMessageReceived(senderNumber, message) {
-    console.log("\nReceived a message from customer: " + senderNumber)
+function handleMessageReceived(gwInstance, gwNumber, senderNumber, message) {
+    console.log("\nReceived a message from gateway: " + gwNumber + "; instance: " + gwInstance)
+    console.log("Message from customer: " + senderNumber)
     console.log("The message content is: " + message)
 
     var responseMsg = "To be defined";
@@ -71,21 +70,21 @@ function handleMessageReceived(senderNumber, message) {
         responseMsg = "Choose a product. Send \n'1' for Product X. \n'2' for Product 'Y' and so on."
     }
 
-    sendWhatsAppMessage(senderNumber, responseMsg)
+    sendWhatsAppMessage(gwInstance, senderNumber, responseMsg)
 }
 
 
 /**
  * Sends a message to a destination number.
  */
-function sendWhatsAppMessage(destinationNumber, message) {
+function sendWhatsAppMessage(gwInstanceId, destinationNumber, message) {
     var jsonPayloadObj = {
         'number': destinationNumber,
         'message': message
     };
 
     request({
-        url: 'https://enterprise.whatsmate.net/v3/whatsapp/single/text/message/' + GATEWAY_INSTANCE_ID,
+        url: 'https://enterprise.whatsmate.net/v3/whatsapp/single/text/message/' + gwInstanceId,
         method: "POST",
         json: true,
         headers: {
@@ -107,7 +106,9 @@ function sendWhatsAppMessage(destinationNumber, message) {
 app.post('/webhook', function (req, res) {
     var srcNumber = req.body.number;
     var strMessage = req.body.message;
-    handleMessageReceived(srcNumber, strMessage);
+    var strGwInstance = req.body.instance_id;
+    var strGwNumber = req.body.gateway_number;
+    handleMessageReceived(strGwInstance, strGwNumber, srcNumber, strMessage);
     res.send('Data received')
 })
 
