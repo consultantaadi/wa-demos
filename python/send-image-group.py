@@ -11,6 +11,7 @@ clientSecret = "YOUR_OWN_SECRET_HERE"
 
 group = 'YOUR UNIQUE GROUP NAME HERE'  # TODO Specify your unique group name here
 fullpath_to_photo = "../assets/cute-girl.jpg"
+caption = 'Lovely Gal'
 
 # Encode photo in base64 format
 image_base64 = None
@@ -24,7 +25,8 @@ headers = {
 
 jsonBody = {
     'group_name': group,
-    'image': image_base64
+    'image': image_base64,
+    'caption': caption
 }
 
 r = requests.post("http://api.whatsmate.net/v3/whatsapp/group/image/message/%s" % instanceId, 

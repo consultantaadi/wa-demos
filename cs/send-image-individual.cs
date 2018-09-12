@@ -20,8 +20,9 @@ class WaImageSender
         string recipient = "12025550105";
         // TODO: Remember to copy the JPG from ..\assets to the TEMP directory!
         string base64Content = convertFileToBase64("C:\\TEMP\\cute-girl.jpg");
+        string caption = "Lovely Gal";
         
-        imgSender.sendImage(recipient, base64Content);
+        imgSender.sendImage(recipient, base64Content, caption);
 
         Console.WriteLine("Press Enter to exit.");
         Console.ReadLine();
@@ -35,7 +36,7 @@ class WaImageSender
         return base64Encoded;
     }
 
-    public bool sendImage(string number, string base64Content)
+    public bool sendImage(string number, string base64Content, string caption)
     {
         bool success = true;
 
@@ -47,7 +48,7 @@ class WaImageSender
                 client.Headers["X-WM-CLIENT-ID"] = CLIENT_ID;
                 client.Headers["X-WM-CLIENT-SECRET"] = CLIENT_SECRET;
 
-                SingleImagePayload payloadObj = new SingleImagePayload() { number = number, image = base64Content};
+                SingleImagePayload payloadObj = new SingleImagePayload() { number = number, caption = caption, image = base64Content};
                 string postData = (new JavaScriptSerializer()).Serialize(payloadObj);
 
                 client.Encoding = Encoding.UTF8;
@@ -71,6 +72,7 @@ class WaImageSender
     public class SingleImagePayload
     {
         public string number { get; set; }
+        public string caption { get; set; }
         public string image { get; set; }
     }
 

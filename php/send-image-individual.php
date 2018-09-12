@@ -9,7 +9,8 @@
 
   $postData = array(
     'number' => '12025550108',  // TODO: Specify the recipient's number (NOT the gateway number) here.
-    'image' => $base64Image
+    'image' => $base64Image,
+    'caption' => 'Lovely Gal'
   );
 
   $headers = array(

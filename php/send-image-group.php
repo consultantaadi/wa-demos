@@ -9,7 +9,8 @@
 
   $postData = array(
     'group_name' => 'YOUR UNIQUE GROUP NAME HERE',  // TODO: Specify the unique name of your group here.
-    'image' => $base64Image
+    'image' => $base64Image,
+    'caption' => 'Lovely Gal'
   );
 
   $headers = array(

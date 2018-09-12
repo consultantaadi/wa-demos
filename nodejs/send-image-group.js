@@ -10,7 +10,8 @@ var clientSecret = "YOUR_OWN_SECRET_ID";
 
 var jsonPayload = JSON.stringify({
     group_name: "YOUR UNIQUE GROUP NAME HERE",  // FIXME
-    image: fs.readFileSync("../assets/cute-girl.jpg").toString('base64')  // FIXME
+    image: fs.readFileSync("../assets/cute-girl.jpg").toString('base64'),  // FIXME
+    caption: "Lovely Gal"  // FIXME
 });
 
 var options = {

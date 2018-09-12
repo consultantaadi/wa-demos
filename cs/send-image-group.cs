@@ -20,8 +20,9 @@ class WaImageGroupSender
         string group = "YOUR UNIQUE GROUP NAME HERE";
         // TODO: Remember to copy the JPG from ..\assets to the TEMP directory!
         string base64Content = convertFileToBase64("C:\\TEMP\\cute-girl.jpg");
+        string caption = "Lovely Gal";
         
-        imgSender.sendGroupImage(group, base64Content);
+        imgSender.sendGroupImage(group, base64Content, caption);
 
         Console.WriteLine("Press Enter to exit.");
         Console.ReadLine();
@@ -35,7 +36,7 @@ class WaImageGroupSender
         return base64Encoded;
     }
 
-    public bool sendGroupImage(string group, string base64Content)
+    public bool sendGroupImage(string group, string base64Content, string caption)
     {
         bool success = true;
 
@@ -47,7 +48,7 @@ class WaImageGroupSender
                 client.Headers["X-WM-CLIENT-ID"] = CLIENT_ID;
                 client.Headers["X-WM-CLIENT-SECRET"] = CLIENT_SECRET;
 
-                GroupImagePayload payloadObj = new GroupImagePayload() { group_name = group, image = base64Content};
+                GroupImagePayload payloadObj = new GroupImagePayload() { group_name = group, image = base64Content, caption = caption};
                 string postData = (new JavaScriptSerializer()).Serialize(payloadObj);
 
                 client.Encoding = Encoding.UTF8;
@@ -72,6 +73,7 @@ class WaImageGroupSender
     {
         public string group_name { get; set; }
         public string image { get; set; }
+        public string caption { get; set; }
     }
 
 }

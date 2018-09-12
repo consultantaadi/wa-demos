@@ -40,6 +40,7 @@ public class WaImageGroupSender {
      */
     class ImageGroupMessage {
         String group_name = null;
+        String caption = null;
         String image = null;
     }
     
@@ -60,15 +61,16 @@ public class WaImageGroupSender {
         // TODO: Specify the content of your image
         Path imagePath = Paths.get("../assets/cute-girl.jpg");
         byte[] imageBytes = Files.readAllBytes(imagePath);
+        String caption = "Lovely Gal";
         
         WaImageGroupSender imgSender = new WaImageGroupSender();
-        imgSender.sendPhotoGroupMessage(group, imageBytes);
+        imgSender.sendPhotoGroupMessage(group, imageBytes, caption);
     }
 
     /**
      * Sends out a WhatsApp message (an image) to a group
      */
-    public void sendPhotoGroupMessage(String group, byte[] imageBytes)
+    public void sendPhotoGroupMessage(String group, byte[] imageBytes, String caption)
             throws Exception {
         byte[] encodedBytes = Base64.encodeBase64(imageBytes);
         String base64Image = new String(encodedBytes);
@@ -76,6 +78,7 @@ public class WaImageGroupSender {
         ImageGroupMessage imageMsgObj = new ImageGroupMessage();
         imageMsgObj.group_name = group;
         imageMsgObj.image = base64Image;
+        imageMsgObj.caption = caption;
 
         Gson gson = new Gson();
         String jsonPayload = gson.toJson(imageMsgObj);

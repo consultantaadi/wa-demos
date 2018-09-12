@@ -40,6 +40,7 @@ public class WaImageSender {
      */
     class ImageMessage {
         String number = null;
+        String caption = null;
         String image = null;
     }
     
@@ -60,15 +61,16 @@ public class WaImageSender {
         // TODO: Specify the content of your image
         Path imagePath = Paths.get("../assets/cute-girl.jpg");
         byte[] imageBytes = Files.readAllBytes(imagePath);
+        String caption = "Lovely Gal";
         
         WaImageSender imgSender = new WaImageSender();
-        imgSender.sendPhotoMessage(recipient, imageBytes);
+        imgSender.sendPhotoMessage(recipient, imageBytes, caption);
     }
 
     /**
      * Sends out a WhatsApp message (an image) to a person
      */
-    public void sendPhotoMessage(String recipient, byte[] imageBytes)
+    public void sendPhotoMessage(String recipient, byte[] imageBytes, String caption)
             throws Exception {
         byte[] encodedBytes = Base64.encodeBase64(imageBytes);
         String base64Image = new String(encodedBytes);
@@ -76,6 +78,7 @@ public class WaImageSender {
         ImageMessage imageMsgObj = new ImageMessage();
         imageMsgObj.number = recipient;
         imageMsgObj.image = base64Image;
+        imageMsgObj.caption = caption;
 
         Gson gson = new Gson();
         String jsonPayload = gson.toJson(imageMsgObj);

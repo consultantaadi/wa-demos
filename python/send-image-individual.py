@@ -11,6 +11,7 @@ clientSecret = "YOUR_OWN_SECRET_HERE"
 
 number = '12025550108'  # FIXME
 fullpath_to_photo = "../assets/cute-girl.jpg"
+caption = 'Lovely Gal'  # FIXME
 
 # Encode photo in base64 format
 image_base64 = None
@@ -24,7 +25,8 @@ headers = {
 
 jsonBody = {
     'number': number,
-    'image': image_base64
+    'image': image_base64,
+    'caption': caption
 }
 
 r = requests.post("http://api.whatsmate.net/v3/whatsapp/single/image/message/%s" % instanceId, 

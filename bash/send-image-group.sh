@@ -21,6 +21,7 @@ base64_image=`base64 -w 0 ../assets/cute-girl.jpg`
 cat > /tmp/jsonbody.txt << _EOM_
   {
     "group_name": "$group_name",
+    "caption": "Lovely Gal",
     "image": "$base64_image"
   }
 _EOM_
