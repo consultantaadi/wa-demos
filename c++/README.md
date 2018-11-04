@@ -8,3 +8,7 @@ Michael Haephrati from Secured Globe was kind enough to contribute their C++ sou
  * Their GitHub repository:
    * https://github.com/haephrati/whatsappmate
 
+
+New to our API? Learn the basic concepts here:
+ * https://whatsmate.github.io/2016-02-24-send-whatsapp-message-csharp/
+
